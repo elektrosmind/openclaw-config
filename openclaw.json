@@ -149,6 +149,7 @@
         }
       },
       "workspace": "/Users/elektrobot/.openclaw/workspace",
+      "skipBootstrap": true,
       "userTimezone": "America/New_York",
       "memorySearch": {
         "enabled": true,
