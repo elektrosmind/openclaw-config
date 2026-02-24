@@ -1,0 +1,6 @@
+.DS_Store
+.env
+*.bak
+memory/sachin.md
+memory/elektro.md
+cost-log.jsonl
