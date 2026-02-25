@@ -1,6 +1,6 @@
 # Systems Status — Operational State
 
-**Last updated:** 2026-02-22 (integrated macos-permissions.md, services.md)
+**Last updated:** 2026-02-25
 
 This is a living document tracking what's currently installed and working.
 
@@ -118,11 +118,14 @@ Connected via macOS Automation permissions:
 - **Account:** elektrosmind
 - **CLI:** gh (Homebrew)
 - **Connected:** 2026-02-09
+- **Backup repo:** `elektrosmind/openclaw-config`
 - **SSH authentication:** 2026-02-19
   - Key: `~/.ssh/id_ed25519` (ed25519)
   - Public key added to GitHub
   - Git configured to use SSH by default (`url.git@github.com:.insteadOf https://github.com/`)
   - Tested: `ssh -T git@github.com` ✓
+- **Automated sync:** launchd job `ai.openclaw.git-sync` runs `~/.openclaw/git-sync.sh` daily at 06:35 local time
+- **Sync logs:** `~/.openclaw/logs/git-sync.log`, `~/.openclaw/logs/git-sync.launchd.log`, `~/.openclaw/logs/git-sync.launchd.err.log`
 
 ## Gateway Status
 
@@ -136,11 +139,13 @@ Connected via macOS Automation permissions:
 |------|----------|---------|-------|
 | Weekly update check | Sunday 6:15 AM ET | Telegram | Auto-upgrades Homebrew libs; see `maintenance/weekly-updates-playbook.md` |
 | Daily OpenClaw check | Daily 6 AM ET | Telegram | Silent if no update |
+| GitHub config sync | Daily 06:35 local | launchd | `~/.openclaw/git-sync.sh` commits/pushes curated config + memory changes |
 
-### Cron Best Practices
+### Scheduler Best Practices
 - **Stagger jobs by at least 5 minutes** to avoid resource contention (locks, I/O, CPU)
 - **Light jobs first, heavy jobs after** — quick checks complete cleanly, long tasks run without blocking
 - **Document schedules** in this table and note interdependencies
+- **Use launchd for macOS host tasks** that should run regardless of OpenClaw cron config
 
 ### Never Auto-Upgrade
 - **Node** (pinned — permissions)

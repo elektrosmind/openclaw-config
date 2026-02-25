@@ -1,6 +1,27 @@
 # Configuration Changes — Change Log
 
-**Last updated:** 2026-02-23
+**Last updated:** 2026-02-25
+
+---
+
+## 2026-02-24 — Daily GitHub Sync Automation
+
+Implemented automated daily GitHub sync for OpenClaw config/memory backup:
+- **Sync script:** `~/.openclaw/git-sync.sh`
+- **Scheduler:** launchd agent `~/Library/LaunchAgents/ai.openclaw.git-sync.plist`
+- **Run time:** Daily at **06:35 local time**
+- **Logs:** `~/.openclaw/logs/git-sync.log`, `~/.openclaw/logs/git-sync.launchd.log`, `~/.openclaw/logs/git-sync.launchd.err.log`
+
+Safety controls in script:
+- Lock directory to prevent overlapping runs
+- Fetch + pull (rebase/autostash) before commit/push
+- Curated staging scope (config/memory/docs paths)
+- Explicit exclusion of sensitive/volatile files (`.env*`, `identity/device-auth.json`, `memory/main.sqlite*`)
+
+Validation:
+- Script syntax check passed (`bash -n`)
+- Dry-run and real push both completed successfully
+- LaunchAgent is loaded and active with daily calendar trigger
 
 ---
 

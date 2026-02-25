@@ -48,6 +48,13 @@ _No known issues currently._
 - Easy to confuse letter O with number 0
 - **Fix:** Double-check tokens when troubleshooting auth failures
 
+### Telegram "Access Not Configured" in DM
+- Typical cause: `channels.telegram.dmPolicy` is set to `pairing` and sender is not yet approved
+- **Check pending requests:** `openclaw pairing list telegram`
+- **Approve code:** `openclaw pairing approve telegram <PAIRING_CODE>`
+- **Verify allowlist:** `~/.openclaw/credentials/telegram-default-allowFrom.json`
+- If needed, restart gateway: `openclaw gateway restart`
+
 ---
 
 *Add new issues as they arise. Move resolved issues to the "Resolved" section.*
