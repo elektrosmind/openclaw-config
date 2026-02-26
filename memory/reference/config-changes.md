@@ -4,6 +4,23 @@
 
 ---
 
+## 2026-02-25 — Cron Store Recovery (Daily/Weekly Checks Restored)
+
+Investigated missing daily update check and found the cron store had been overwritten:
+- `~/.openclaw/cron/jobs.json` was rewritten to an empty job list at **2026-02-24 19:22:38**
+- After gateway restart at **2026-02-24 19:42:32**, scheduler loaded **0 jobs**
+
+Recovered by restoring the expected cron jobs:
+- `daily-openclaw-update-check` — **daily 6:00 AM ET** (silent if up to date)
+- `weekly-update-check` — **Sunday 6:15 AM ET** (Telegram summary)
+
+Validation:
+- `openclaw cron status` reports `jobs: 2`
+- `openclaw cron list --json` shows both jobs with expected schedules
+- Gateway restart completed and cron reloaded with `jobs: 2`
+
+---
+
 ## 2026-02-24 — Daily GitHub Sync Automation
 
 Implemented automated daily GitHub sync for OpenClaw config/memory backup:

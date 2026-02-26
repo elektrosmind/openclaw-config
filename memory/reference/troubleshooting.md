@@ -1,6 +1,6 @@
 # Troubleshooting — Known Issues & Fixes
 
-**Last updated:** 2026-02-22
+**Last updated:** 2026-02-25
 
 ## Current Issues
 
@@ -23,6 +23,24 @@ _No known issues currently._
 1. Click extension icon → Options
 2. Set Port to **18789** (matching `gateway.listen.port` in `openclaw.json`)
 3. Ensure Token matches `OPENCLAW_GATEWAY_TOKEN` from `.env` exactly (no quotes)
+
+---
+
+### Cron Jobs Missing After Restart
+
+**Date:** 2026-02-25  
+**Status:** ✅ Resolved
+
+**Symptom:** `openclaw cron list` shows no jobs, and daily update checks stop.
+
+**Root Cause:** Cron store file `~/.openclaw/cron/jobs.json` was overwritten with an empty `jobs` array. On next gateway restart, scheduler loaded zero jobs.
+
+**Fix:**
+1. Verify scheduler state: `openclaw cron status`
+2. Verify jobs: `openclaw cron list --json`
+3. Re-add missing jobs (`daily-openclaw-update-check`, `weekly-update-check`)
+4. Restart gateway: `openclaw gateway restart`
+5. Re-check cron status/list to confirm jobs are loaded
 
 ---
 
